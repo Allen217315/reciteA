@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import Material from '@/models/Material'
-import { connectDB } from '@/lib/db'
-import { authOptions } from '../../auth/[...nextauth]/route'
+import connectDB from '@/lib/db'
+import { authOptions } from '@/lib/auth'
 
 export async function PUT(
   request: NextRequest,
