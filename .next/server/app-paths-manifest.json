@@ -1,0 +1,13 @@
+{
+  "/review/page": "app/review/page.js",
+  "/decks/page": "app/decks/page.js",
+  "/materials/page": "app/materials/page.js",
+  "/api/materials/tags/route": "app/api/materials/tags/route.js",
+  "/api/materials/route": "app/api/materials/route.js",
+  "/api/decks/route": "app/api/decks/route.js",
+  "/api/decks/[id]/route": "app/api/decks/[id]/route.js",
+  "/api/decks/[id]/cards/route": "app/api/decks/[id]/cards/route.js",
+  "/api/decks/[id]/reset-levels/route": "app/api/decks/[id]/reset-levels/route.js",
+  "/decks/[id]/page": "app/decks/[id]/page.js",
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js"
+}

@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+}
+
+@layer base {
+  input[type='text'],
+  input[type='email'],
+  input[type='password'],
+  textarea {
+    @apply block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500;
+  }
+
+  button {
+    @apply inline-flex justify-center rounded-md border px-4 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  button[type='submit'] {
+    @apply border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
+  }
+
+  button[type='button'] {
+    @apply border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-blue-500;
+  }
+} 
