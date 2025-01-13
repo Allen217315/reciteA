@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
+import connectDB from '@/lib/db';
+import { authOptions } from '@/lib/auth';
 import { Card } from '@/models/Card';
-import { connectDB } from '@/lib/db';
-import { authOptions } from '../../auth/[...nextauth]/route';
 
 // 获取待复习的卡片
 export async function GET() {

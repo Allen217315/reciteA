@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { Card } from '@/models/Card';
-import { connectDB } from '@/lib/db';
-import { authOptions } from '../../auth/[...nextauth]/route';
+import connectDB from '@/lib/db';
+import { authOptions } from '@/lib/auth';
 
 // 更新卡片
 export async function PUT(

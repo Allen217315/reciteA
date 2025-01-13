@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
 import connectDB from '@/lib/db';
+import { authOptions } from '@/lib/auth';
 import { Card } from '@/models/Card';
 import Deck from '@/models/deck';
 
