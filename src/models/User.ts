@@ -55,6 +55,5 @@ userSchema.pre('save', async function(next) {
   }
 });
 
-const User = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
-
-export default User; 
+// 只使用一种导出方式
+export const User = mongoose.models.User || mongoose.model<IUser>('User', userSchema); 
