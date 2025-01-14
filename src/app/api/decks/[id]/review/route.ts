@@ -7,6 +7,15 @@ import Material from '@/models/Material';
 import { IMaterial } from '@/types';
 import mongoose from 'mongoose';
 
+// 添加一个辅助接口来匹配 MongoDB 返回的文档类型
+interface MaterialDocument {
+  _id: mongoose.Types.ObjectId;
+  content: string;
+  tag?: string;
+  userId: string;
+  __v: number;
+}
+
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
@@ -69,8 +78,16 @@ export async function GET(
       _id: { $in: materialIds },
       userId: session.user.id,
     })
-    .select('_id content tag userId')  // 明确选择需要的字段
-    .lean() as IMaterial[];
+    .select('_id content tag userId')
+    .lean()
+    .then(docs => {
+      return (docs as any[]).map(doc => ({
+        _id: doc._id,
+        content: doc.content,
+        tag: doc.tag,
+        userId: doc.userId
+      }));
+    }) as IMaterial[];
 
     // 创建材料ID到内容的映射
     const materialMap = new Map(
