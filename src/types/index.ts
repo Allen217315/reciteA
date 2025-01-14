@@ -1,3 +1,5 @@
+import { Types } from 'mongoose';
+
 export interface Card {
   id: string;
   front: string;
@@ -24,4 +26,13 @@ export interface ReviewProgress {
 
 export interface ReviewSession {
   progress: ReviewProgress;
+}
+
+export interface IMaterial {
+  _id: Types.ObjectId;
+  content: string;
+  tag?: string;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
 } 

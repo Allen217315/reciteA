@@ -4,6 +4,13 @@ import { authOptions } from '@/lib/auth';
 import connectDB from '@/lib/db';
 import { Card } from '@/models/Card';
 import Material from '@/models/Material';
+import { IMaterial } from '@/types';
+import mongoose from 'mongoose';
+
+interface MaterialDoc {
+  _id: mongoose.Types.ObjectId;
+  content: string;
+}
 
 export async function GET(
   request: Request,
@@ -66,7 +73,7 @@ export async function GET(
     const materials = await Material.find({
       _id: { $in: materialIds },
       userId: session.user.id,
-    }).lean();
+    }).lean() as IMaterial[];
 
     // 创建材料ID到内容的映射
     const materialMap = new Map(
