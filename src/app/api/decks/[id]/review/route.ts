@@ -56,13 +56,24 @@ export async function GET(
     let cards: ICard[];
     if (mode === 'mistakes') {
       // 仅复习错题本
-      cards = await Card.find({
+      const rawCards = await Card.find({
         ...baseQuery,
         level: 0, // 熟练度为0的卡片
       })
       .sort({ reviewCount: -1 }) // 答错次数最多的优先
       .select('_id front back level reviewCount correctCount incorrectCount materialId')
-      .lean() as ICard[];
+      .lean();
+
+      cards = (rawCards as any[]).map(card => ({
+        _id: card._id,
+        front: card.front,
+        back: card.back,
+        level: card.level,
+        reviewCount: card.reviewCount,
+        correctCount: card.correctCount,
+        incorrectCount: card.incorrectCount,
+        materialId: card.materialId
+      }));
     } else {
       // 全面复习：获取今天需要复习且未完成复习的卡片
       const today = new Date();
@@ -70,7 +81,7 @@ export async function GET(
       const tomorrow = new Date(today);
       tomorrow.setDate(tomorrow.getDate() + 1);
 
-      cards = await Card.find({
+      const rawCards = await Card.find({
         ...baseQuery,
         nextReview: { 
           $gte: today,
@@ -80,7 +91,18 @@ export async function GET(
       })
       .sort({ level: 1 }) // 熟练度低的优先
       .select('_id front back level reviewCount correctCount incorrectCount materialId')
-      .lean() as ICard[];
+      .lean();
+
+      cards = (rawCards as any[]).map(card => ({
+        _id: card._id,
+        front: card.front,
+        back: card.back,
+        level: card.level,
+        reviewCount: card.reviewCount,
+        correctCount: card.correctCount,
+        incorrectCount: card.incorrectCount,
+        materialId: card.materialId
+      }));
     }
 
     // 获取所有卡片关联的学习资料
