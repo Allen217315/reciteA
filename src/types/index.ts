@@ -33,4 +33,6 @@ export interface IMaterial {
   content: string;
   tag?: string;
   userId: string;
+  createdAt: Date;
+  updatedAt: Date;
 } 
