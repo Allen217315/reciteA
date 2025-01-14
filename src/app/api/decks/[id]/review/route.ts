@@ -7,11 +7,6 @@ import Material from '@/models/Material';
 import { IMaterial } from '@/types';
 import mongoose from 'mongoose';
 
-interface MaterialDoc {
-  _id: mongoose.Types.ObjectId;
-  content: string;
-}
-
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
@@ -73,7 +68,10 @@ export async function GET(
     const materials = await Material.find({
       _id: { $in: materialIds },
       userId: session.user.id,
-    }).lean() as IMaterial[];
+    })
+    .select('_id content tag userId createdAt updatedAt') // 明确选择需要的字段
+    .lean()
+    .then(docs => docs as IMaterial[]); // 使用 then 进行类型转换
 
     // 创建材料ID到内容的映射
     const materialMap = new Map(
