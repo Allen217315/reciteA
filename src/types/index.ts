@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+import mongoose from 'mongoose';
 
 export interface Card {
   id: string;
@@ -29,10 +29,8 @@ export interface ReviewSession {
 }
 
 export interface IMaterial {
-  _id: Types.ObjectId;
+  _id: mongoose.Types.ObjectId;
   content: string;
   tag?: string;
   userId: string;
-  createdAt: Date;
-  updatedAt: Date;
 } 

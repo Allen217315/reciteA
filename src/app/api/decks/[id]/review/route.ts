@@ -69,9 +69,8 @@ export async function GET(
       _id: { $in: materialIds },
       userId: session.user.id,
     })
-    .select('_id content tag userId createdAt updatedAt') // 明确选择需要的字段
-    .lean()
-    .then(docs => docs as IMaterial[]); // 使用 then 进行类型转换
+    .select('_id content tag userId')  // 明确选择需要的字段
+    .lean() as IMaterial[];
 
     // 创建材料ID到内容的映射
     const materialMap = new Map(
