@@ -16,6 +16,17 @@ interface MaterialDocument {
   __v: number;
 }
 
+interface ICard {
+  _id: mongoose.Types.ObjectId;
+  front: string;
+  back: string;
+  level: number;
+  reviewCount?: number;
+  correctCount?: number;
+  incorrectCount?: number;
+  materialId?: mongoose.Types.ObjectId;
+}
+
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
@@ -42,7 +53,7 @@ export async function GET(
       userId: session.user.id,
     };
 
-    let cards;
+    let cards: ICard[];
     if (mode === 'mistakes') {
       // 仅复习错题本
       cards = await Card.find({
@@ -50,8 +61,8 @@ export async function GET(
         level: 0, // 熟练度为0的卡片
       })
       .sort({ reviewCount: -1 }) // 答错次数最多的优先
-      .select('front back level reviewCount correctCount incorrectCount materialId')
-      .lean();
+      .select('_id front back level reviewCount correctCount incorrectCount materialId')
+      .lean() as ICard[];
     } else {
       // 全面复习：获取今天需要复习且未完成复习的卡片
       const today = new Date();
@@ -68,8 +79,8 @@ export async function GET(
         level: { $lt: 5 } // 排除已达到最高熟练度的卡片
       })
       .sort({ level: 1 }) // 熟练度低的优先
-      .select('front back level reviewCount correctCount incorrectCount materialId')
-      .lean();
+      .select('_id front back level reviewCount correctCount incorrectCount materialId')
+      .lean() as ICard[];
     }
 
     // 获取所有卡片关联的学习资料
