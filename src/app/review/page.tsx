@@ -33,6 +33,7 @@ export default function ReviewPage() {
   const [totalCards, setTotalCards] = useState(0);
   const [loading, setLoading] = useState(true);
   const [decks, setDecks] = useState<Array<{ id: string; name: string }>>([]);
+  const [isFlipped, setIsFlipped] = useState(() => Math.random() < 0.5);
 
   // 在组件加载时获取卡片组列表
   useEffect(() => {
@@ -72,6 +73,7 @@ export default function ReviewPage() {
       if (data.cards && data.cards.length > 0) {
         setCurrentCard(data.cards[0]);
         setTotalCards(data.cards.length);
+        setIsFlipped(Math.random() < 0.5);
       } else {
         setCurrentCard(null);
         setTotalCards(0);
@@ -185,8 +187,17 @@ export default function ReviewPage() {
             {/* 卡片正面/背面 */}
             <div className="p-6 min-h-[200px]">
               <div className="text-lg mb-4">
-                {currentCard.front}
+                {isFlipped ? currentCard.back : currentCard.front}
               </div>
+              
+              {showAnswer && (
+                <div className="text-lg mb-4 pt-4 border-t">
+                  <div className="font-semibold mb-2">
+                    {isFlipped ? "正面" : "背面"}:
+                  </div>
+                  {isFlipped ? currentCard.front : currentCard.back}
+                </div>
+              )}
               
               {/* 答对/答错次数 */}
               <div className="flex gap-4 text-sm text-gray-500 mb-4">
